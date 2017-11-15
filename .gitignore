@@ -1,1 +1,5 @@
 **/.ipynb_checkpoints/*
+**/*.log
+
+# Ignore the phantomjs executable - download this when cloning repo
+resources/phantomjs
