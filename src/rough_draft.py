@@ -103,6 +103,89 @@ def scrape_single_results_page(driver):
     
     return parcel_numbers
 
+def scrape_parcel_data(driver):
+    
+    # Define data IDs
+    id_fmt = "ContentPlaceHolder1_{}_fvData{}_{}"
+    address_id = id_fmt.format("Base", "Profile", "AddressLabel")
+    valuation_id = id_fmt.format("Valuation", "Valuation", "Label1")
+    num_stories_id = id_fmt.format("Residential", "Residential", "Label2")
+    year_built_id = id_fmt.format(
+                        "Residential", 
+                        "Residential", 
+                        "YearBuiltLabel")
+    num_bed_id = id_fmt.format(
+                        "Residential", 
+                        "Residential",
+                        "NumberOfBedroomsLabel")
+    num_full_bath_id = id_fmt.format(
+                        "Residential",
+                        "Residential",
+                        "NumberOfFullBathsLabel")
+    num_half_bath_id = id_fmt.format(
+                        "Residential",
+                        "Residential",
+                        "NumberOfHalfBathsLabel")
+    living_area_id = id_fmt.format(
+                        "Residential",
+                        "Residential",
+                        "FinishedLivingAreaLabel")
+    basement_id = id_fmt.format(
+                        "Residential",
+                        "Residential",
+                        "Label1")
+    basement_area_id = id_fmt.format(
+                        "Residential",
+                        "Residential",
+                        "Label4")
+
+    # Define JavaScript code for navigating tabs
+    valuation_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','2')"
+    residential_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','8')"
+
+    # Scrape data off of 'Base' tab
+    address = driver.find_element_by_id(address_id).text
+
+    # Navigate to 'Valuation' tab and scrape data
+    driver.execute_script(valuation_tab)
+    time.sleep(1)
+    valuation = driver.find_element_by_id(valuation_id).text
+
+    # Navigate to 'Residential' tab and scrape data
+    driver.execute_script(residential_tab)
+    time.sleep(1)
+    try:
+        num_stories = driver.find_element_by_id(num_stories_id).text
+        year_built = driver.find_element_by_id(year_built_id).text
+        num_bed = driver.find_element_by_id(num_bed_id).text
+        num_full_bath = driver.find_element_by_id(num_full_bath_id).text
+        num_half_bath = driver.find_element_by_id(num_half_bath_id).text
+        living_area = driver.find_element_by_id(living_area_id).text
+        basement = driver.find_element_by_id(basement_id).text
+        basement_area = driver.find_element_by_id(basement_area_id).text
+    except Exception as err:
+        print(err)
+        num_stories = None
+        year_built = None
+        num_bed = None
+        num_full_bath = None
+        num_half_bath = None
+        living_area = None
+        basement = None
+        basement_area = None
+
+    # Create return dictionary
+    data_dict = dict(address = address,
+                     appraisedValue = valuation,
+                     yearBuilt = year_built,
+                     numBedrooms = num_bed,
+                     numFullBaths = num_full_bath,
+                     numHalfBaths = num_half_bath,
+                     livingArea = living_area,
+                     basement = basement,
+                     basementArea = basement_area)
+    return data_dict
+
 def main():
     # Set up
     project_name = 'zanesville-oh-housing-data'
@@ -115,8 +198,18 @@ def main():
     parcel_numbers = scrape_single_results_page(search_page_driver)
     print(parcel_numbers)
 
-    # Tear down
+    # Close the Firefox window 
     search_page_driver.quit()
+
+    # Create a URL for one the parcel numbers
+    test_parcel_dict = {'parcel_id': parcel_numbers[0]}
+    test_parcel_url = URLS['parcel-id-data-fmt'].format(**test_parcel_dict)
+    parcel_data_driver = prepare_webdriver(test_parcel_url)
+    test_parcel_data = scrape_parcel_data(parcel_data_driver)
+    print(test_parcel_data)
+
+    # Close the Firefox window
+    parcel_data_driver.quit()
 
 if __name__ == '__main__':
     main()
