@@ -43,37 +43,37 @@ def find_project_path(project_name):
 
     return project_path
 
-def prepare_search_page_webdriver():
-    """Prepares the search page session for retrieving the parcel numbers
-    for the City of Zanesville.
+def prepare_webdriver(url):
+    """ Prepares a Selenium webdriver with Firefox for the given URL, 
+    where the disclaimer button will be pressed if it appears.
 
     Parameters
     ----------
-    project_path (str) : Path of the Git project folder.
+    url (str) : URL that will be navigated to after creating the webdriver.
 
     Returns
     -------
-    search_page_driver (selenium.webdriver) : Webdriver using Firefox, and
-        is set to the advanced search results for the auditor's website for
-        the City of Zanesville.
+    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the 
+        given URL, where the URL is assumed to be pointing to a page on the
+        auditor's website.
 
     """
     # Create a link to the Firefox API file and set up a webdriver
-    search_page_driver = webdriver.Firefox()
+    driver = webdriver.Firefox()
 
-    # Navigate to the page with the parcel numbers
-    search_page_driver.get(URLS['advanced-search-results'])
+    # Navigate to the URL and pause for the website to fully load
+    driver.get(url)
     time.sleep(1) 
 
     # If there is a disclaimer button, then click it using the CSS ID
     button_css_id = 'ContentPlaceHolder1_btnDisclaimerAccept'
     try:
-        search_page_driver.find_element_by_id(button_css_id).click()
+        driver.find_element_by_id(button_css_id).click()
     except Exception as err:
         print(err)
 
     # Return the prepared webdriver object
-    return search_page_driver
+    return driver
 
 def scrape_single_results_page(driver):
     """Scrapes the parcel numbers from a single advanced search page for the
@@ -109,7 +109,7 @@ def main():
     project_path = find_project_path(project_name)
 
     # Setup the webdriver to the search page
-    search_page_driver = prepare_search_page_webdriver()
+    search_page_driver = prepare_webdriver(URLS['advanced-search-results'])
 
     # Scrape as many parcel numbers as we can
     parcel_numbers = scrape_single_results_page(search_page_driver)
