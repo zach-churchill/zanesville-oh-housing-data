@@ -2,8 +2,8 @@
 **/.ipynb_checkpoints/*
 **/*.log
 
-# Ignore the phantomjs executable - download this when cloning repo
-resources/phantomjs
-
 # For now, ignore all SQLite databases
 **/data/raw/*.sqlite
+
+# Ignore all sandbox files
+**/sandbox.*

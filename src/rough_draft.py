@@ -1,31 +1,13 @@
 import os
 import sys
-import json
-import sqlite3
+import time
 from pathlib import Path
-import selenium
 from selenium import webdriver
-from bs4 import BeautifulSoup
 
 URLS = {
         'advanced-search-results': "http://www.muskingumcountyauditor.org/Results.aspx?SearchType=Advanced&Criteria=20g%2byYTTdkDKRrEbpO1sLV9b36Zp5GCYSiEbzYPtPXU%3d",
         'parcel-id-data-fmt': "http://muskingumcountyauditor.org/Data.aspx?ParcelID={parcel_id}"
     }
-
-TABLE_NAME = 'parcel_numbers'
-TABLE_SCHEMA = 'CREATE TABLE {} (number TEXT UNIQUE)'.format(TABLE_NAME)
-
-def handle_error(err):
-    """Prints error to the screen, with '[ERROR]' prepended to the message.
-    Then, it exits the program.
-
-    Parameters
-    ----------
-    err (exception) : Inherited exception class.
-
-    """
-    print('[ERROR] {}'.format(err))
-    sys.exit()
 
 def find_project_path(project_name):
     """Returns the full path for the project given that the project name is
@@ -54,45 +36,14 @@ def find_project_path(project_name):
     try:
         project_part_index = path_parts.index(project_name)
     except ValueError as err:
-        handle_error(err)
+        print(err)
+        sys.exit()
     else:
         project_path = os.path.join(*path_parts[:project_part_index+1])
 
     return project_path
 
-def setup_database(database_file_path):
-    """Given the path, a SQLite is created with a simple one column table if
-    one doesn't already exist; otherwise, it simply connects to the existing
-    database file. Returns the sqlite3 connection object.
-
-    Parameters
-    ----------
-    database_file_path (str) : Path string pointing to the SQLite database file.
-    table_schema (str) : SQL string to set up database table.
-
-    Returns
-    -------
-    connection_obj (sqlite3.Connection) : Connection object to the database.
-
-    """
-    #if not os.path.exists(database_file_path):
-    connection_obj = sqlite3.connect(database_file_path)
-    cursor = connection_obj.cursor()
-    try:
-        cursor.execute(TABLE_SCHEMA)
-    except sqlite3.OperationalError as err:
-        if str(err) == 'table {} already exists'.format(TABLE_NAME):
-            pass
-        else:
-            handle_error(err)
-    else:
-        connection_obj.commit()
-    finally:
-        cursor.close()
-
-    return connection_obj
-
-def prepare_search_page_webdriver(project_path):
+def prepare_search_page_webdriver():
     """Prepares the search page session for retrieving the parcel numbers
     for the City of Zanesville.
 
@@ -102,99 +53,70 @@ def prepare_search_page_webdriver(project_path):
 
     Returns
     -------
-    search_page_driver (selenium.webdriver) : Webdriver using PhantomJS, and
+    search_page_driver (selenium.webdriver) : Webdriver using Firefox, and
         is set to the advanced search results for the auditor's website for
         the City of Zanesville.
 
     """
-    # Create a link to the PhantomJS API file and set up a webdriver
-    phantomjs_path = os.path.join(project_path, 'resources', 'phantomjs')
-    search_page_driver = webdriver.PhantomJS(executable_path=phantomjs_path)
+    # Create a link to the Firefox API file and set up a webdriver
+    search_page_driver = webdriver.Firefox()
 
     # Navigate to the page with the parcel numbers
     search_page_driver.get(URLS['advanced-search-results'])
+    time.sleep(1) 
 
-    # If there is a disclaimer, use the necessary JavaScript to press
-    # the 'Accept' button (read if you have not done so first)
+    # If there is a disclaimer button, then click it using the CSS ID
     button_css_id = 'ContentPlaceHolder1_btnDisclaimerAccept'
-    js_fmt_code = "document.getElementById('{}').click();"
-    js_code = js_fmt_code.format(button_css_id)
     try:
-        search_page_driver.execute_script(js_code)
+        search_page_driver.find_element_by_id(button_css_id).click()
     except Exception as err:
-        handle_error(err)
+        print(err)
 
     # Return the prepared webdriver object
     return search_page_driver
 
-def store_parcel_numbers(database_path, parcel_numbers):
-    """Stores the scraped parcel numbers into a SQLite database, where the
-    table consists of just one column for unique parcel numbers.
+def scrape_single_results_page(driver):
+    """Scrapes the parcel numbers from a single advanced search page for the
+    parcel numbers.
 
     Parameters
     ----------
-    database_path (str) : Path to the SQLite database
-    parcel_numbers (list) : List of strings of parcel numbers scraped from
-        the advanced search webpage.
+    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the 
+        advanced search results for the auditor's website for the City of 
+        Zanesville.
 
     Returns
     -------
-    database_path (str) : Path to the SQLite database file.
+    parcel_numbers (list) : List of strings of parcel numbers scraped from
+        the advanced search webpage.
 
     """
-    # Set up the SQLite database file for the parcel numbers
-    parcel_conn = setup_database(database_path)
+    even_rows = driver.find_elements_by_class_name("rowstyle")
+    odd_rows = driver.find_elements_by_class_name("alternatingrowstyle")
+    rows = even_rows + odd_rows
 
-    # Insert parcel numbers iteratively so that we can catch when a
-    # parcel number is not unique and quietly dismiss
-    fmt_insert_stmt = "INSERT INTO parcel_numbers VALUES (?)"
-    parcel_cursor = parcel_conn.cursor()
-    for parcel_number in parcel_numbers:
-        try:
-            parcel_cursor.execute(fmt_insert_stmt, parcel_numbers)
-        except sqlite3.IntegrityError:
-            pass
-
-    # Commit the inserts to the database
-    parcel_conn.commit()
-
-    # Tear down
-    parcel_cursor.close()
-    parcel_conn.close()
-
-    return database_path
-
-def scrape_parcel_numbers(search_page_driver):
-    """Shell function to understand the process."""
-    parcel_numbers = ['1234']
+    parcel_numbers = []
+    for row in rows:
+        # The parcel number is the first column, so only get first "td"
+        parcel_number = row.find_element_by_tag_name("td").text
+        parcel_numbers.append(parcel_number)
+    
     return parcel_numbers
 
 def main():
     # Set up
     project_name = 'zanesville-oh-housing-data'
     project_path = find_project_path(project_name)
-    raw_data_path = os.path.join(project_path, 'data', 'raw')
-    database_name = 'parcel.sqlite'
-    database_path = os.path.join(raw_data_path, database_name)
 
     # Setup the webdriver to the search page
-    search_page_driver = prepare_search_page_webdriver(project_path)
+    search_page_driver = prepare_search_page_webdriver()
 
     # Scrape as many parcel numbers as we can
-    parcel_numbers = scrape_parcel_numbers(search_page_driver)
-
-    # Store the results in a SQLite database
-    database_path = store_parcel_numbers(database_path, parcel_numbers)
-
-    # Test
-    parcel_conn = setup_database(database_path)
-    parcel_cursor = parcel_conn.cursor()
-    parcel_cursor.execute('SELECT * FROM {}'.format(TABLE_NAME))
-    print(parcel_cursor.fetchone())
+    parcel_numbers = scrape_single_results_page(search_page_driver)
+    print(parcel_numbers)
 
     # Tear down
-    parcel_cursor.close()
-    parcel_conn.close()
+    search_page_driver.quit()
 
 if __name__ == '__main__':
     main()
