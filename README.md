@@ -11,5 +11,4 @@ scraped from the Muskingum County auditor's website.
 
 ## Requirements
 
-You will need to download [PhantomJS](http://phantomjs.org) and put the executable (phantomjs) in
-the resources folder (create one in local copy if necessary).
+You will need to download [Firefox](https://www.mozilla.org/en-US/firefox/) and [geckodriver](https://github.com/mozilla/geckodriver/releases).
