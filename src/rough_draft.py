@@ -44,7 +44,7 @@ def find_project_path(project_name):
     return project_path
 
 def prepare_webdriver(url):
-    """ Prepares a Selenium webdriver with Firefox for the given URL, 
+    """ Prepares a Selenium webdriver with Firefox for the given URL,
     where the disclaimer button will be pressed if it appears.
 
     Parameters
@@ -53,7 +53,7 @@ def prepare_webdriver(url):
 
     Returns
     -------
-    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the 
+    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the
         given URL, where the URL is assumed to be pointing to a page on the
         auditor's website.
 
@@ -63,7 +63,7 @@ def prepare_webdriver(url):
 
     # Navigate to the URL and pause for the website to fully load
     driver.get(url)
-    time.sleep(1) 
+    time.sleep(1)
 
     # If there is a disclaimer button, then click it using the CSS ID
     button_css_id = 'ContentPlaceHolder1_btnDisclaimerAccept'
@@ -81,8 +81,8 @@ def scrape_single_results_page(driver):
 
     Parameters
     ----------
-    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the 
-        advanced search results for the auditor's website for the City of 
+    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the
+        advanced search results for the auditor's website for the City of
         Zanesville.
 
     Returns
@@ -100,22 +100,39 @@ def scrape_single_results_page(driver):
         # The parcel number is the first column, so only get first "td"
         parcel_number = row.find_element_by_tag_name("td").text
         parcel_numbers.append(parcel_number)
-    
+
     return parcel_numbers
 
-def scrape_parcel_data(driver):
-    
+def scrape_parcel_data(row, driver):
+    parcel_number = row['Parcel']
+    parcel_dict = {'parcel_id': parcel_number}
+    parcel_url = URLS['parcel-id-data-fmt'].format(**parcel_dict)
+    driver.get(parcel_url)
+
+    # Create return dictionary
+    data_dict = dict(parcelNumber = parcel_number,
+                     address = None,
+                     appraisedValue = None,
+                     numStories = None,
+                     yearBuilt = None,
+                     numBedrooms = None,
+                     numFullBaths = None,
+                     numHalfBaths = None,
+                     livingArea = None,
+                     basement = None,
+                     basementArea = None)
+
     # Define data IDs
     id_fmt = "ContentPlaceHolder1_{}_fvData{}_{}"
     address_id = id_fmt.format("Base", "Profile", "AddressLabel")
     valuation_id = id_fmt.format("Valuation", "Valuation", "Label1")
     num_stories_id = id_fmt.format("Residential", "Residential", "Label2")
     year_built_id = id_fmt.format(
-                        "Residential", 
-                        "Residential", 
+                        "Residential",
+                        "Residential",
                         "YearBuiltLabel")
     num_bed_id = id_fmt.format(
-                        "Residential", 
+                        "Residential",
                         "Residential",
                         "NumberOfBedroomsLabel")
     num_full_bath_id = id_fmt.format(
@@ -144,12 +161,22 @@ def scrape_parcel_data(driver):
     residential_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','8')"
 
     # Scrape data off of 'Base' tab
-    address = driver.find_element_by_id(address_id).text
+    try:
+        address = driver.find_element_by_id(address_id).text
+    except Exception as err:
+        print('{}: {}'.format(parcel_number, err))
+    else:
+        data_dict['address'] = address
 
     # Navigate to 'Valuation' tab and scrape data
     driver.execute_script(valuation_tab)
     time.sleep(1)
-    valuation = driver.find_element_by_id(valuation_id).text
+    try:
+        valuation = driver.find_element_by_id(valuation_id).text
+    except Exception as err:
+        print('{}: {}'.format(parcel_number, err))
+    else:
+        data_dict['appraisedValue'] = valuation
 
     # Navigate to 'Residential' tab and scrape data
     driver.execute_script(residential_tab)
@@ -164,52 +191,60 @@ def scrape_parcel_data(driver):
         basement = driver.find_element_by_id(basement_id).text
         basement_area = driver.find_element_by_id(basement_area_id).text
     except Exception as err:
-        print(err)
-        num_stories = None
-        year_built = None
-        num_bed = None
-        num_full_bath = None
-        num_half_bath = None
-        living_area = None
-        basement = None
-        basement_area = None
+        print('{}: {}'.format(parcel_number, err))
+    else:
+        data_dict['numberStories'] = num_stories
+        data_dict['yearBuilt'] = year_built
+        data_dict['numBedrooms'] = num_bed
+        data_dict['numFullBaths'] = num_full_bath
+        data_dict['numHalfBaths'] = num_half_bath
+        data_dict['livingArea'] = living_area
+        data_dict['basement'] = basement
+        data_dict['basementArea'] = basement_area
 
-    # Create return dictionary
-    data_dict = dict(address = address,
-                     appraisedValue = valuation,
-                     yearBuilt = year_built,
-                     numBedrooms = num_bed,
-                     numFullBaths = num_full_bath,
-                     numHalfBaths = num_half_bath,
-                     livingArea = living_area,
-                     basement = basement,
-                     basementArea = basement_area)
     return data_dict
 
 def main():
     # Set up
+    import pandas as pd
     project_name = 'zanesville-oh-housing-data'
     project_path = find_project_path(project_name)
+    data_path = os.path.join(project_path, 'data', 'processed')
 
-    # Setup the webdriver to the search page
-    search_page_driver = prepare_webdriver(URLS['advanced-search-results'])
+    # # Setup the webdriver to the search page
+    # search_page_driver = prepare_webdriver(URLS['advanced-search-results'])
+    #
+    # # Scrape as many parcel numbers as we can
+    # parcel_numbers = scrape_single_results_page(search_page_driver)
+    # print(parcel_numbers)
+    #
+    # # Close the Firefox window
+    # search_page_driver.quit()
 
-    # Scrape as many parcel numbers as we can
-    parcel_numbers = scrape_single_results_page(search_page_driver)
-    print(parcel_numbers)
+    # Get processed parcel numbers
+    parcel_numbers_csv = os.path.join(data_path, 'parcel-numbers.csv')
+    parcel_numbers = pd.read_csv(parcel_numbers_csv)
 
-    # Close the Firefox window 
-    search_page_driver.quit()
+    # Create a webdriver
+    empty_parcel_dict = {'parcel_id': ''}
+    empty_parcel_url = URLS['parcel-id-data-fmt'].format(**empty_parcel_dict)
+    driver = prepare_webdriver(empty_parcel_url)
 
-    # Create a URL for one the parcel numbers
-    test_parcel_dict = {'parcel_id': parcel_numbers[0]}
-    test_parcel_url = URLS['parcel-id-data-fmt'].format(**test_parcel_dict)
-    parcel_data_driver = prepare_webdriver(test_parcel_url)
-    test_parcel_data = scrape_parcel_data(parcel_data_driver)
-    print(test_parcel_data)
+    start_time = time.time()
+    parcel_numbers = parcel_numbers.iloc[:10, ]
+    import functools
+    partial_scrape_parcel_data = functools.partial(scrape_parcel_data,
+                                                   driver=driver)
+    parcel_data = parcel_numbers.apply(scrape_parcel_data,
+                                       driver=driver,
+                                       axis=1)
+    end_time = time.time()
+    print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
+    print('Parcel numbers processed: {}'.format(parcel_data.shape[0]))
+    print(parcel_data)
 
     # Close the Firefox window
-    parcel_data_driver.quit()
+    driver.quit()
 
 if __name__ == '__main__':
     main()
