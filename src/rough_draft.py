@@ -1,13 +1,21 @@
 import os
 import sys
 import time
+import functools
 from pathlib import Path
+from collections import namedtuple
+import pandas as pd
 from selenium import webdriver
 
 URLS = {
         'advanced-search-results': "http://www.muskingumcountyauditor.org/Results.aspx?SearchType=Advanced&Criteria=20g%2byYTTdkDKRrEbpO1sLV9b36Zp5GCYSiEbzYPtPXU%3d",
         'parcel-id-data-fmt': "http://muskingumcountyauditor.org/Data.aspx?ParcelID={parcel_id}"
     }
+
+HousingData = namedtuple('Row', ["parcelNumber", "address", "appraisedValue",
+                                 "numStories", "yearBuilt", "numBedrooms", 
+                                 "numFullBaths", "numHalfBaths", "livingArea",
+                                 "basement", "basementArea"])
 
 def find_project_path(project_name):
     """Returns the full path for the project given that the project name is
@@ -109,19 +117,6 @@ def scrape_parcel_data(row, driver):
     parcel_url = URLS['parcel-id-data-fmt'].format(**parcel_dict)
     driver.get(parcel_url)
 
-    # Create return dictionary
-    data_dict = dict(parcelNumber = parcel_number,
-                     address = None,
-                     appraisedValue = None,
-                     numStories = None,
-                     yearBuilt = None,
-                     numBedrooms = None,
-                     numFullBaths = None,
-                     numHalfBaths = None,
-                     livingArea = None,
-                     basement = None,
-                     basementArea = None)
-
     # Define data IDs
     id_fmt = "ContentPlaceHolder1_{}_fvData{}_{}"
     address_id = id_fmt.format("Base", "Profile", "AddressLabel")
@@ -165,8 +160,7 @@ def scrape_parcel_data(row, driver):
         address = driver.find_element_by_id(address_id).text
     except Exception as err:
         print('{}: {}'.format(parcel_number, err))
-    else:
-        data_dict['address'] = address
+        address = None
 
     # Navigate to 'Valuation' tab and scrape data
     driver.execute_script(valuation_tab)
@@ -175,8 +169,7 @@ def scrape_parcel_data(row, driver):
         valuation = driver.find_element_by_id(valuation_id).text
     except Exception as err:
         print('{}: {}'.format(parcel_number, err))
-    else:
-        data_dict['appraisedValue'] = valuation
+        valuation = None
 
     # Navigate to 'Residential' tab and scrape data
     driver.execute_script(residential_tab)
@@ -192,21 +185,33 @@ def scrape_parcel_data(row, driver):
         basement_area = driver.find_element_by_id(basement_area_id).text
     except Exception as err:
         print('{}: {}'.format(parcel_number, err))
-    else:
-        data_dict['numberStories'] = num_stories
-        data_dict['yearBuilt'] = year_built
-        data_dict['numBedrooms'] = num_bed
-        data_dict['numFullBaths'] = num_full_bath
-        data_dict['numHalfBaths'] = num_half_bath
-        data_dict['livingArea'] = living_area
-        data_dict['basement'] = basement
-        data_dict['basementArea'] = basement_area
+        num_stories = None
+        year_built = None
+        num_bed = None
+        num_full_bath = None
+        num_half_bath = None
+        living_area = None
+        basement = None
+        basement_area = None
 
-    return data_dict
+    row = HousingData(
+                parcelNumber   = parcel_number,
+                address        = address,
+                appraisedValue = valuation,
+                numStories     = num_stories,
+                yearBuilt      = year_built,
+                numBedrooms    = num_bed,
+                numFullBaths   = num_full_bath,
+                numHalfBaths   = num_half_bath,
+                livingArea     = living_area,
+                basement       = basement,
+                basementArea   = basement_area
+            )
+
+    return row
 
 def main():
     # Set up
-    import pandas as pd
     project_name = 'zanesville-oh-housing-data'
     project_path = find_project_path(project_name)
     data_path = os.path.join(project_path, 'data', 'processed')
@@ -231,20 +236,23 @@ def main():
     driver = prepare_webdriver(empty_parcel_url)
 
     start_time = time.time()
-    parcel_numbers = parcel_numbers.iloc[:10, ]
-    import functools
+    parcel_numbers = parcel_numbers.iloc[:3, ]
     partial_scrape_parcel_data = functools.partial(scrape_parcel_data,
                                                    driver=driver)
     parcel_data = parcel_numbers.apply(scrape_parcel_data,
                                        driver=driver,
                                        axis=1)
     end_time = time.time()
-    print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
-    print('Parcel numbers processed: {}'.format(parcel_data.shape[0]))
-    print(parcel_data)
 
     # Close the Firefox window
     driver.quit()
+
+    # Take a look at the data
+    print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
+    print('Parcel numbers processed: {}'.format(parcel_data.shape[0]))
+
+    parcel_df = pd.DataFrame(list(parcel_data))
+    print(parcel_df)
 
 if __name__ == '__main__':
     main()
