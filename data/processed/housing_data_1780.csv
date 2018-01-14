@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-51-01-08-000,945 HUGHES ST,"$33,000.00",1,1986,3,1,0,864,NO,0
+81-51-01-10-000,231 SPURK ST,$900.00,,,,,,,,
+81-52-03-10-000,922 SHARON AVE,$100.00,,,,,,,,
+81-52-03-12-000,HUGHES ST,"$1,100.00",,,,,,,,
+81-52-03-13-000,HUGHES ST,"$23,800.00",1,1890,2,1,0,868,YES,434
+81-52-03-14-000,HUGHES ST,"$3,100.00",,,,,,,,
+81-52-03-16-000,970 ALLEN ST,,,,,,,,,
+81-52-04-01-000,SHARON ST,$900.00,,,,,,,,
+81-52-04-04-000,GRANT ST,$500.00,,,,,,,,
+81-52-04-06-000,1103 SHARON AVE,"$1,500.00",,,,,,,,

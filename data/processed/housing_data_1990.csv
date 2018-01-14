@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-52-04-12-000,1083 SHARON AVE,"$28,000.00",1,1901,3,1,0,1140,YES,1308
+81-52-04-13-000,1083 SHARON AVE,"$1,000.00",,,,,,,,
+81-52-04-21-000,GRANT ST,"$1,000.00",,,,,,,,
+81-52-04-24-000,1039 SHARON AVE,$900.00,,,,,,,,
+81-52-04-30-000,SHARON AVE,$900.00,,,,,,,,
+81-52-04-33-000,1011 SHARON AVE,$700.00,,,,,,,,
+81-52-05-04-000,1110 SHARON AVE,"$19,200.00",2,1901,3,1,0,1850,YES,238
+81-52-05-08-000,1096 SHARON AVE,"$1,700.00",,,,,,,,
+81-52-05-18-000,1038 SHARON AVE,"$331,100.00",,,,,,,,
+81-52-05-20-000,1030 SHARON AVE,$200.00,,,,,,,,

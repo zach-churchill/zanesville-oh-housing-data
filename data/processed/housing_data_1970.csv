@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-55-01-17-000,270 HARRIS RD,"$139,300.00",1,2003,3,2,0,1824,YES,1824
+81-55-01-20-000,HUEY ST,"$42,300.00",,,,,,,,
+81-55-01-24-000,128 HUEY ST,"$25,000.00",2,1910,2,1,0,1500,YES,100
+81-55-01-37-000,NOT ON FILE,"$3,100.00",,,,,,,,
+81-56-01-06-000,DAVIS ST,"$1,100.00",,,,,,,,
+81-56-01-08-000,DAVIS ST,"$1,500.00",,,,,,,,
+81-56-02-01-000,1284 DAVIS ST,"$1,400.00",,,,,,,,
+81-56-02-03-000,DAVIS ST,$700.00,,,,,,,,
+81-56-02-04-000,DAVIS ST,$700.00,,,,,,,,
+81-56-02-10-000,DAVIS ST,$900.00,,,,,,,,

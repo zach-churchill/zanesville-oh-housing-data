@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-02-05-17-000,MUSKINGUM AVE,"$1,400.00",,,,,,,,
+81-02-05-20-000,MUSKINGUM AVE,"$3,500.00",,,,,,,,
+81-02-05-22-000,MUSKINGUM AVE,"$44,400.00",,,,,,,,
+81-02-05-23-000,MUSKINGUM AVE,"$5,900.00",,,,,,,,
+81-02-05-24-000,18 JEFFERSON ST,"$95,000.00",,,,,,,,
+81-02-05-26-000,MUSKINGUM AVE,"$40,900.00",,,,,,,,
+81-02-05-30-000,MUSKINGUM AVE,"$42,300.00",,,,,,,,
+81-03-01-04-000,620 MOXAHALA AVE,"$90,900.00",,,,,,,,
+81-03-01-12-001,VAN BURN ST,$300.00,,,,,,,,
+81-03-02-28-000,609 MOXAHALA AVE,"$43,500.00",2,1901,4,2,0,1692,YES,344

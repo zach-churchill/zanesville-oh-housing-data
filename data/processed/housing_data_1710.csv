@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-47-01-12-000,WHEELER RD,"$2,200.00",,,,,,,,
+81-47-02-05-000,1376 WHEELER RD,"$27,400.00",1,1901,2,1,0,732,NO,0
+81-47-03-02-000,1367 STONE ST,"$35,500.00",1,1920,2,1,0,870,YES,650
+81-47-04-01-000,ST CHARLES ST,$900.00,,,,,,,,
+81-47-04-02-000,ST CHARLES ST,"$1,200.00",,,,,,,,
+81-47-04-03-000,ST CHARLES ST,"$1,200.00",,,,,,,,
+81-47-04-16-000,ST CHARLES & HAESSLER ST,$700.00,,,,,,,,
+81-47-05-01-000,ST JOHN ST,$600.00,,,,,,,,
+81-47-05-16-000,HAESSLER ST,"$1,000.00",,,,,,,,
+81-47-05-20-000,DANVILLE ST,"$1,400.00",,,,,,,,

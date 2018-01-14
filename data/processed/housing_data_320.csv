@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-02-04-13-000,109 MADISON ST,"$44,300.00",,,,,,,,
+81-02-04-15-000,539 MOXAHALA AVE,"$10,500.00",1,1901,2,1,0,636,NO,0
+81-02-05-01-000,24 JEFFERSON ST,"$2,100.00",,,,,,,,
+81-02-05-04-000,MOXAHALA AVE,$500.00,,,,,,,,
+81-02-05-06-000,528 MOXAHALA AVE,"$1,700.00",,,,,,,,
+81-02-05-07-000,532 MOXAHALA AVE,"$29,100.00",2,1901,2,1,0,1517,YES,653
+81-02-05-09-000,544 MOXAHALA AVE,"$2,800.00",,,,,,,,
+81-02-05-12-000,564 MOXAHALA AVE,"$5,200.00",,,,,,,,
+81-02-05-14-000,15 MADISON ST,"$103,800.00",,,,,,,,
+81-02-05-15-000,MADISON ST,"$4,200.00",,,,,,,,

@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-57-03-30-000,DRAKE ST,$300.00,,,,,,,,
+81-57-03-39-000,972 HARVEY ST,$500.00,,,,,,,,
+81-56-03-22-000,MARIETTA ST,$280.00,,,,,,,,
+81-56-03-24-000,MOORE ST,"$31,100.00",,,,,,,,
+81-56-03-25-000,MOORE ST,"$2,300.00",,,,,,,,
+81-56-03-28-000,153 GLESSNER AVE,"$35,000.00",1,1901,3,1,0,1106,YES,410
+81-57-01-12-000,HILL ST,"$1,400.00",,,,,,,,
+81-57-01-36-000,1071 HARVEY ST,"$1,400.00",,,,,,,,
+81-57-02-01-000,HILL ST,"$4,200.00",,,,,,,,
+81-57-02-06-000,HARVEY ST,"$4,800.00",,,,,,,,

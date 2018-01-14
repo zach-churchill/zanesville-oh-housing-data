@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-15-02-05-000,909 PUTNAM AVE,"$10,000.00",,,,,,,,
+81-16-01-07-000,753 PUTNAM AVE,"$4,900.00",,,,,,,,
+81-16-01-16-000,239 HARRISON ST,"$33,300.00",1,1901,3,1,0,900,YES,900
+81-16-01-18-000,WOODLAWN AVE,$300.00,,,,,,,,
+81-16-01-20-000,744 WOODLAWN AVE,"$1,800.00",,,,,,,,
+81-16-01-22-000,732 WOODLAWN AVE,"$2,500.00",,,,,,,,
+81-16-02-01-001,PUTNAM AVE,"$6,500.00",,,,,,,,
+81-16-02-09-000,812 WOODLAWN AVE,"$1,200.00",,,,,,,,
+81-16-02-10-000,814 WOODLAWN AVE,"$12,000.00",1,1901,3,1,0,652,YES,216
+81-16-02-12-000,WOODLAWN AVE,"$1,200.00",,,,,,,,

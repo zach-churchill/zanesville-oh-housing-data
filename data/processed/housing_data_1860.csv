@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-51-04-31-000,HUGHES ST,$100.00,,,,,,,,
+81-52-01-01-000,1118 MARIETTA ST,,,,,,,,,
+81-52-01-09-000,1066 MARIETTA ST,$900.00,,,,,,,,
+81-52-01-15-000,1046 MARIETTA ST,"$1,000.00",,,,,,,,
+81-52-01-17-000,1034 MARIETTA ST,$700.00,,,,,,,,
+81-52-01-20-000,1020 MARIETTA ST,"$10,600.00",1,1901,3,1,0,1280,NO,0
+81-52-01-22-000,1033 GRANT ST,"$1,000.00",,,,,,,,
+81-52-01-23-000,1039 GRANT ST,$500.00,,,,,,,,
+81-52-01-25-000,1047 GRANT ST,$800.00,,,,,,,,
+81-52-01-26-000,1051 GRANT ST,$800.00,,,,,,,,

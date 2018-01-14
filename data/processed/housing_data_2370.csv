@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-60-03-23-000,67 SOUTHARD AVE,"$60,000.00",1,1928,3,1,0,1262,YES,442
+81-60-03-29-000,35 SOUTHARD AVE,,,,,,,,,
+81-60-03-31-000,27 SOUTHARD AVE,"$72,200.00",2,1938,4,1,1,2296,YES,1256
+81-61-01-04-000,812 MARIETTA ST,"$13,300.00",,,,,,,,
+81-61-01-11-000,ALLEY OFF WAYNE AVE,"$4,500.00",,,,,,,,
+81-61-01-16-000,821 HUGHES ST,"$18,600.00",2,1901,4,1,0,1578,YES,324
+81-62-03-22-000,7TH ST,"$10,500.00",,,,,,,,
+81-62-04-01-000,7 HARVEY ST,"$415,600.00",,,,,,,,
+81-62-05-05-000,150 8TH ST,"$15,500.00",,,,,,,,
+81-62-05-08-000,158 8TH ST,$600.00,,,,,,,,

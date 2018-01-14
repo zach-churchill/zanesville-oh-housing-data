@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-56-02-05-000,1278 DAVIS ST,"$85,800.00",1,2007,3,2,0,2052,YES,2052
+81-56-02-08-000,1264 DAVIS ST,"$23,600.00",1,1890,2,1,0,696,YES,696
+81-56-02-13-000,MOORE ST,$700.00,,,,,,,,
+81-56-02-20-000,MOORE ST,$700.00,,,,,,,,
+81-56-03-09-000,MOORE ST,"$2,000.00",,,,,,,,
+81-56-03-11-000,115 13TH ST,$600.00,,,,,,,,
+81-56-03-14-000,MARIETTA ST,$600.00,,,,,,,,
+81-56-03-26-000,MOORE ST,"$1,300.00",,,,,,,,
+81-56-03-34-000,1188 GREENWOOD AVE,"$1,700.00",,,,,,,,
+81-57-03-63-000,957 MARIETTA ST,"$5,500.00",1,1865,0,1,0,880,YES,768

@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-52-05-37-000,972 HUGHES ST,$400.00,,,,,,,,
+81-53-01-04-000,MOORE ST,$700.00,,,,,,,,
+81-53-01-05-000,1274 MOORE ST,"$69,500.00",1,1973,3,2,0,1152,YES,1488
+81-53-01-07-000,MOORE AVE,$700.00,,,,,,,,
+81-53-01-09-000,MOORE AVE,$700.00,,,,,,,,
+81-53-01-14-000,1263 SHARON AVE,"$44,100.00",2,1910,3,1,0,1372,YES,252
+81-53-01-16-000,1277 SHARON AVE,"$1,400.00",,,,,,,,
+81-53-02-01-000,GRANT ST,$900.00,,,,,,,,
+81-53-02-02-000,GRANT ST,$600.00,,,,,,,,
+81-53-02-08-000,GRANT ST,$700.00,,,,,,,,

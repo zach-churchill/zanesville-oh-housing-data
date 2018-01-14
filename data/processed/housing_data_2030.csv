@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-55-01-19-000,HARRIS RD,$700.00,,,,,,,,
+81-55-01-28-000,132 HUEY ST,"$1,000.00",,,,,,,,
+81-55-01-29-000,132 HUEY ST,"$1,000.00",,,,,,,,
+81-55-01-34-000,GREEN ST,$200.00,,,,,,,,
+81-54-02-03-000,WHEELER RD,"$1,000.00",,,,,,,,
+81-54-02-04-000,WHEELER RD,"$1,100.00",,,,,,,,
+81-54-02-06-000,1342 WHEELER RD,"$60,200.00",1,1992,2,1,0,960,NO,0
+81-54-02-08-000,1352 WHEELER RD,"$61,900.00",1,1992,3,1,0,960,NO,0
+81-54-02-20-000,CHARLES ST,$730.00,,,,,,,,
+81-55-01-05-000,140 GREEN ST,"$25,300.00",1,1960,2,1,0,825,NO,0

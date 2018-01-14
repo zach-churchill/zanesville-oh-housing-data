@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-53-01-22-000,1299 SHARON AVE,"$27,170.00",1,1900,0,1,0,999,NO,0
+81-53-02-05-000,GRANT ST,$600.00,,,,,,,,
+81-53-02-07-000,GRANT ST,$700.00,,,,,,,,
+81-53-02-09-000,1203 GRANT ST,$700.00,,,,,,,,
+81-53-02-12-000,1151 GRANT ST,$500.00,,,,,,,,
+81-53-02-13-000,1145 GRANT ST,"$24,400.00",1,1901,3,1,0,840,YES,420
+81-53-02-14-000,1111 GRANT ST,$500.00,,,,,,,,
+81-53-02-15-000,1142 MOORE ST,$500.00,,,,,,,,
+81-53-02-17-000,GRANT ST,$100.00,,,,,,,,
+81-53-03-01-000,1241 SHARON AVE,"$30,000.00",2,1901,3,1,0,1497,NO,0

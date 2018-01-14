@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-17-03-04-000,618 WOODLAWN AVE,"$11,300.00",2,1901,4,1,1,1750,YES,437
+81-17-03-06-000,628 WOODLAWN AVE,"$2,300.00",,,,,,,,
+81-17-03-09-000,640 WOODLAWN AVE,"$1,500.00",,,,,,,,
+81-17-03-16-000,229 VAN BUREN ST,"$1,500.00",,,,,,,,
+81-17-03-28-000,PUTNAM AVE,"$1,600.00",,,,,,,,
+81-17-03-29-000,615 PUTNAM AVE,"$18,500.00",2,1901,5,1,0,1944,YES,486
+81-17-03-30-000,613 PUTNAM AVE,"$2,200.00",,,,,,,,
+81-17-04-07-000,719 PUTNAM AVE,"$5,600.00",,,,,,,,
+81-17-04-09-000,724 WOODLAWN AVE,"$1,700.00",,,,,,,,
+81-18-01-01-000,421 PUTNAM AVE,"$324,900.00",,,,,,,,

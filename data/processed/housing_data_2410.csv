@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-59-03-27-000,1116 WHEELING AVE,$400.00,,,,,,,,
+81-60-01-02-000,1432 WHEELING AVE,"$45,400.00",2,1901,3,1,0,1560,YES,780
+81-61-01-18-000,HUGHES ST,$900.00,,,,,,,,
+81-61-02-01-000,724 MARIETTA ST,"$41,400.00",,,,,,,,
+81-61-02-05-001,222 7TH ST,"$22,700.00",2,1901,2,1,1,1332,YES,736
+81-61-02-06-000,222 7TH ST,"$26,100.00",,,,,,,,
+81-61-02-08-000,215 S 8TH ST,"$13,800.00",,,,,,,,
+81-61-02-13-000,232 HUGHES ST,"$1,400.00",,,,,,,,
+81-61-02-16-000,224 7TH ST,"$1,700.00",,,,,,,,
+81-61-03-01-000,MARIETTA ST,"$81,200.00",,,,,,,,

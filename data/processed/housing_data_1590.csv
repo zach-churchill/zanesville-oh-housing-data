@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-49-01-08-000,FISHER LN,$300.00,,,,,,,,
+81-49-01-13-000,373 FISHERS LN,$700.00,,,,,,,,
+81-49-01-16-000,349 FISHERS LN,"$26,800.00",1,1901,2,1,0,1008,YES,462
+81-50-98-14-000,439 WAYNE AVE,"$8,900.00",,,,,,,,
+81-50-98-16-000,WAYNE AVE,"$5,700.00",,,,,,,,
+81-50-98-19-000,495 WAYNE AVE,"$5,500.00",,,,,,,,
+81-50-98-20-000,WAYNE AVE,$500.00,,,,,,,,
+81-50-99-01-000,SHARON AVE,"$8,400.00",,,,,,,,
+81-50-99-11-000,468 WAYNE AVE,"$46,900.00",2,1901,3,1,0,1536,YES,768
+81-50-99-17-000,494 WAYNE AVE,"$52,700.00",2,1860,3,1,0,1578,YES,768

@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-54-01-25-000,1303 SHARON AVE,"$56,600.00",2,1901,3,1,0,1568,YES,944
+81-54-02-01-000,1330 SHARON AVE,"$1,200.00",,,,,,,,
+81-54-02-05-000,WHEELER RD,"$1,100.00",,,,,,,,
+81-54-02-12-000,STONE ST,"$1,100.00",,,,,,,,
+81-54-02-15-000,1329 STONE ST,"$24,400.00",1,1901,2,1,0,896,YES,896
+81-54-02-17-000,1308 SHARON AVE,"$10,800.00",,,,,,,,
+81-54-02-18-000,SHARON AVE,"$1,400.00",,,,,,,,
+81-55-01-03-000,112 GREEN ST,"$53,300.00",1,1950,2,1,1,800,YES,800
+81-55-01-04-000,GREEN ST,"$1,000.00",,,,,,,,
+81-55-01-08-000,158 GREEN ST,"$33,000.00",,,,,,,,

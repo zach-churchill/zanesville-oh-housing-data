@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-51-02-09-000,STILLWELL ST,"$1,200.00",,,,,,,,
+81-51-02-11-000,221 STILLWELL ST,"$557,700.00",,,,,,,,
+81-51-02-15-000,222 WAYNE AVE,$600.00,,,,,,,,
+81-51-02-16-000,226 WAYNE AVE,"$1,000.00",,,,,,,,
+81-51-03-01-000,343 WAYNE AVE,"$31,900.00",2,1901,3,1,0,1440,YES,672
+81-51-03-04-000,329 WAYNE AVE,"$3,000.00",1,1916,3,1,0,1263,YES,1263
+81-51-03-12-000,HUGHES ST,"$13,000.00",,,,,,,,
+81-51-03-14-000,806 HUGHES ST,"$1,600.00",,,,,,,,
+81-51-03-15-000,806 HUGHES ST,"$1,500.00",,,,,,,,
+81-51-03-20-000,301 WAYNE AVE,"$1,100.00",,,,,,,,

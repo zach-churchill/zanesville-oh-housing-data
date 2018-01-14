@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-10-05-06-000,1635 PUTNAM AVE,"$2,000.00",,,,,,,,
+81-11-01-02-000,1531 WOODLAWN AVE,"$133,000.00",,,,,,,,
+81-10-03-07-000,PUTNAM AVE,$700.00,,,,,,,,
+81-10-03-12-000,1535 PUTNAM AVE,"$1,900.00",,,,,,,,
+81-10-03-15-000,1541 PUTNAM AVE,"$6,400.00",,,,,,,,
+81-10-04-01-000,1502 WOODLAWN AVE,"$145,700.00",,,,,,,,
+81-10-04-02-000,1502 WOODLAWN AVE,"$2,000.00",,,,,,,,
+81-10-05-05-000,PUTNAM AVE,"$2,500.00",,,,,,,,
+81-10-05-09-000,1629 PUTNAM AVE,"$33,400.00",2,1901,3,1,0,1344,YES,672
+81-12-01-09-000,1338 JEWETT DR,"$28,700.00",1,1901,2,1,0,1052,YES,1040

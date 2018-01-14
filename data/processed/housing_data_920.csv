@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-14-02-04-000,216 WELLER AVE,"$22,200.00",2,1901,4,1,0,1262,YES,616
+81-14-02-08-000,232 WELLER AVE,"$17,500.00",2,1901,4,1,0,1008,YES,588
+81-14-02-09-000,240 WELLER AVE,"$1,850.00",,,,,,,,
+81-14-02-15-000,MAYSVILLE AVE,$200.00,,,,,,,,
+81-15-01-04-000,221 PIERCE ST,"$2,900.00",,,,,,,,
+81-15-01-09-000,PIERCE ST ALLEY,$800.00,,,,,,,,
+81-15-02-03-000,901 PUTNAM AVE,"$43,900.00",,,,,,,,
+81-15-02-06-000,915 PUTNAM AVE,"$7,800.00",,,,,,,,
+81-15-02-07-000,919 PUTNAM AVE,"$9,900.00",,,,,,,,
+81-15-02-11-000,933 MAYSVILLE AVE,"$24,900.00",,,,,,,,

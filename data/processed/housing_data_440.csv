@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-05-03-24-000,851 MOXAHALA AVE,"$1,900.00",,,,,,,,
+81-05-03-27-000,835 MOXAHALA AVE,"$20,600.00",1,1901,3,1,0,1106,YES,566
+81-05-03-32-000,122 HARRISON ST,"$5,700.00",,,,,,,,
+81-06-01-01-000,4 PIERCE ST,"$9,900.00",,,,,,,,
+81-06-01-02-000,12 PIERCE ST,"$2,200.00",,,,,,,,
+81-06-01-03-000,16 PIERCE ST,"$2,400.00",,,,,,,,
+81-06-01-06-000,30 PIERCE ST,"$3,000.00",,,,,,,,
+81-06-01-16-000,948 MOXAHALA AVE,"$5,500.00",,,,,,,,
+81-06-01-19-000,MOXAHALA AVE,"$4,300.00",,,,,,,,
+81-06-01-23-000,MUSKINGUM AVE,"$5,400.00",,,,,,,,

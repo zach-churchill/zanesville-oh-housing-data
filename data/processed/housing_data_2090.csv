@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-56-01-07-000,1279 DAVIS ST,"$1,000.00",,,,,,,,
+81-56-01-10-000,DAVIS ST,,,,,,,,,
+81-56-01-11-000,110 GLESSNER AVE,"$6,900.00",,,,,,,,
+81-56-02-09-000,1260 DAVIS ST,"$33,400.00",1,1930,2,1,0,900,YES,900
+81-56-02-14-000,MOORE ST,$700.00,,,,,,,,
+81-56-02-16-000,MOORE ST,$700.00,,,,,,,,
+81-56-02-17-000,MOORE ST,$700.00,,,,,,,,
+81-56-02-18-000,MOORE ST,$700.00,,,,,,,,
+81-56-02-19-000,MOORE ST,$700.00,,,,,,,,
+81-56-03-03-000,MOORE ST,$700.00,,,,,,,,

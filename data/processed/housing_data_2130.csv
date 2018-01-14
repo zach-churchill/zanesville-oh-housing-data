@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-57-03-04-000,1060 HARVEY ST,$700.00,,,,,,,,
+81-57-03-05-000,DRAKE ST,$200.00,,,,,,,,
+81-57-03-13-000,DRAKE ST,$100.00,,,,,,,,
+81-57-03-18-000,DRAKE ST,$400.00,,,,,,,,
+81-57-03-19-000,HARVEY ST,$500.00,,,,,,,,
+81-57-03-24-000,815 HARVEY ST,$400.00,,,,,,,,
+81-57-03-31-000,DRAKE ST,$300.00,,,,,,,,
+81-57-03-37-000,980 HARVEY ST,"$15,300.00",2,1860,2,1,0,1536,YES,1104
+81-57-03-42-000,HARVEY ST,$100.00,,,,,,,,
+81-57-03-46-000,942 HARVEY ST,$500.00,,,,,,,,

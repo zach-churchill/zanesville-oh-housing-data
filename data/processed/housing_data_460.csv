@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-04-02-01-000,104 VAN BUREN ST,"$3,600.00",,,,,,,,
+81-04-02-19-000,750 PUTNAM AVE,"$6,100.00",,,,,,,,
+81-04-02-22-000,758 PUTNAM AVE,"$74,300.00",,,,,,,,
+81-02-05-08-000,536 MOXAHALA AVE,"$26,700.00",,,,,,,,
+81-02-05-11-000,554 MOXAHALA AVE,"$32,800.00",,,,,,,,
+81-02-05-16-000,MUSKINGUM AVE,"$3,400.00",,,,,,,,
+81-02-05-27-000,MUSKINGUM AVE,"$38,800.00",,,,,,,,
+81-03-01-11-000,656 MOXAHALA AVE,"$25,000.00",1,1901,2,1,0,828,NO,0
+81-03-01-12-000,662 MOXAHALA AVE,"$43,500.00",2,1901,3,1,0,1492,YES,288
+81-03-01-22-000,MUSKINGUM AVE,"$1,700.00",,,,,,,,

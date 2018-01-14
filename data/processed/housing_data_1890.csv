@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-52-01-08-000,1070 MARIETTA,$800.00,,,,,,,,
+81-52-01-12-000,MARIETTA ST,$900.00,,,,,,,,
+81-52-01-18-000,1030 MARIETTA ST,$900.00,,,,,,,,
+81-52-01-19-000,1028 MARIETTA ST,$700.00,,,,,,,,
+81-52-01-33-000,GRANT ST,$800.00,,,,,,,,
+81-52-01-35-000,1101 GRANT ST,"$27,700.00",,,,,,,,
+81-52-01-39-000,1115 GRANT ST,$600.00,,,,,,,,
+81-52-03-02-000,974 MARIETTA ST,"$21,600.00",2,1865,0,1,1,3060,YES,1224
+81-52-04-03-000,SHARON AVE,$900.00,,,,,,,,
+81-52-04-05-000,GRANT ST,$300.00,,,,,,,,

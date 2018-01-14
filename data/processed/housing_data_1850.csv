@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-52-05-25-000,1016 SHARON AVE,"$1,800.00",,,,,,,,
+81-53-01-11-000,COR MOORE AND GLESSN,$900.00,,,,,,,,
+81-53-01-18-000,1283 SHARON AVE,"$30,000.00",1,1901,3,1,0,1294,YES,1054
+81-53-02-03-000,GRANT ST,$600.00,,,,,,,,
+81-51-04-05-000,944 HUGHES ST,"$11,200.00",1,1880,2,1,0,756,YES,388
+81-51-04-09-000,930 HUGHES ST,"$1,000.00",,,,,,,,
+81-51-04-12-000,916 HUGHES ST,"$1,000.00",,,,,,,,
+81-51-04-20-000,320 WAYNE AVE,$700.00,,,,,,,,
+81-51-04-28-000,320 WAYNE,$200.00,,,,,,,,
+81-51-04-30-000,320 WAYNE AVE,$100.00,,,,,,,,

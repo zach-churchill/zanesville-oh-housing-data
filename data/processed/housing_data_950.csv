@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-10-04-05-000,1603 PUTNAM AVE,"$2,700.00",,,,,,,,
+81-10-04-06-000,1603 PUTNAM AVE,"$22,400.00",,,,,,,,
+81-10-05-01-000,1502 WOODLAWN AVE,"$2,000.00",,,,,,,,
+81-10-05-08-000,1633 PUTNAM AVE,"$39,000.00",,,,,,,,
+81-11-02-01-000,LAKE AVE,"$19,600.00",,,,,,,,
+81-11-03-04-000,1423 LAKE DR,"$73,900.00",,,,,,,,
+81-12-01-03-000,1316 JEWETT DR,"$2,800.00",,,,,,,,
+81-12-01-15-000,1352 JEWETT DR,"$24,100.00",2,1901,3,1,1,1696,YES,824
+81-12-01-16-000,1408 JEWETT DR,"$32,200.00",2,1901,4,2,0,1728,YES,392
+81-12-01-21-000,1501 WOODLAWN AVE,"$39,200.00",,,,,,,,

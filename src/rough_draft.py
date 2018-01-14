@@ -159,21 +159,19 @@ def scrape_parcel_data(row, driver):
     try:
         address = driver.find_element_by_id(address_id).text
     except Exception as err:
-        print('{}: {}'.format(parcel_number, err))
         address = None
 
     # Navigate to 'Valuation' tab and scrape data
     driver.execute_script(valuation_tab)
-    time.sleep(1)
+    time.sleep(2)
     try:
         valuation = driver.find_element_by_id(valuation_id).text
     except Exception as err:
-        print('{}: {}'.format(parcel_number, err))
         valuation = None
 
     # Navigate to 'Residential' tab and scrape data
     driver.execute_script(residential_tab)
-    time.sleep(1)
+    time.sleep(2)
     try:
         num_stories = driver.find_element_by_id(num_stories_id).text
         year_built = driver.find_element_by_id(year_built_id).text
@@ -184,7 +182,6 @@ def scrape_parcel_data(row, driver):
         basement = driver.find_element_by_id(basement_id).text
         basement_area = driver.find_element_by_id(basement_area_id).text
     except Exception as err:
-        print('{}: {}'.format(parcel_number, err))
         num_stories = None
         year_built = None
         num_bed = None
@@ -235,24 +232,27 @@ def main():
     empty_parcel_url = URLS['parcel-id-data-fmt'].format(**empty_parcel_dict)
     driver = prepare_webdriver(empty_parcel_url)
 
-    start_time = time.time()
-    parcel_numbers = parcel_numbers.iloc[:3, ]
+    # Partially fill scraping function with driver
     partial_scrape_parcel_data = functools.partial(scrape_parcel_data,
                                                    driver=driver)
-    parcel_data = parcel_numbers.apply(scrape_parcel_data,
-                                       driver=driver,
-                                       axis=1)
-    end_time = time.time()
+
+    fmt_file_path = 'housing_data_{}.csv'
+    for idx in range(2140, parcel_numbers.shape[0], 10):
+        start_time = time.time()
+        mini_batch = parcel_numbers.iloc[idx:idx+10, ]
+        parcel_data = mini_batch.apply(partial_scrape_parcel_data, axis=1)
+        end_time = time.time()
+
+        # Log index and time took to scrape     
+        print('Index: {}'.format(idx))
+        print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
+
+        # Save the data with the index appended 
+        file_path = os.path.join(data_path, fmt_file_path.format(idx))
+        pd.DataFrame(list(parcel_data)).to_csv(file_path, header=True, index=False)
 
     # Close the Firefox window
     driver.quit()
-
-    # Take a look at the data
-    print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
-    print('Parcel numbers processed: {}'.format(parcel_data.shape[0]))
-
-    parcel_df = pd.DataFrame(list(parcel_data))
-    print(parcel_df)
 
 if __name__ == '__main__':
     main()

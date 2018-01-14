@@ -1,0 +1,11 @@
+parcelNumber,address,appraisedValue,numStories,yearBuilt,numBedrooms,numFullBaths,numHalfBaths,livingArea,basement,basementArea
+81-51-03-02-000,339 WAYNE AVE,"$22,300.00",1,1924,2,1,0,926,YES,876
+81-51-03-05-000,327 WAYNE AVE,"$22,000.00",,,,,,,,
+81-51-04-06-000,HUGHES ST,$400.00,,,,,,,,
+81-51-04-08-000,934 HUGHES ST,"$1,100.00",,,,,,,,
+81-51-04-10-000,928 HUGHES ST,$500.00,,,,,,,,
+81-51-04-15-000,914 HUGHES ST,"$31,100.00",2,1901,3,1,0,1928,YES,728
+81-51-04-16-000,304 WAYNE AVE,"$1,000.00",,,,,,,,
+81-51-04-19-000,318 WAYNE AVE,$700.00,,,,,,,,
+81-51-04-21-000,322 WAYNE AVE,$600.00,,,,,,,,
+81-51-04-23-000,324 WAYNE AVE,$800.00,,,,,,,,
