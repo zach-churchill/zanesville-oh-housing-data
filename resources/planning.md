@@ -12,7 +12,14 @@ the project.
   scraped for each individual parcel number.
 
 
-# January 8th, 2018 - January 15th, 2018
+## January 8th, 2018 - January 14th, 2018
 
 * Scrape the manually extract parcel numbers CSV file (website provided functionality to export).
 * Refine logic to scrape data for parcel numbers, and add requisite exception handling when data is not given.
+
+
+## January 15th, 2018 - January 21st, 2018
+
+* Develop R script to aggregate and validate the housing data.
+* Develop R script (or use the one above) to further prepare the data by geolocating the parcel
+  number based on the address, and calculating the Great Circle distance from the warehouses.
