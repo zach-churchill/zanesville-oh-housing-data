@@ -1,6 +1,7 @@
 **/__pycache__/*
 **/.ipynb_checkpoints/*
 **/*.log
+**/.Rhistory
 
 # For now, ignore all SQLite databases
 **/data/raw/*.sqlite
