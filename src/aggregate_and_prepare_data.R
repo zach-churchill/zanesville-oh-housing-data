@@ -8,7 +8,7 @@ library(purrr)
 #
 src.dir <- getwd()
 data.dir <- file.path(src.dir, '..', 'data', 'processed')
-
+consume.data.dir <- file.path(src.dir, '..', 'data', 'consume')
 
 # Load Data ####
 #
@@ -46,3 +46,56 @@ scraped.parcels <- housing.data.df %>%
 "%ni%" <- Negate("%in%")
 
 any(parcels %ni% scraped.parcels)  # Returns FALSE, so all is good!
+
+# Geolocation ####
+#
+library(ggmap)
+
+# Create a new column with the city and state appended to the address
+housing.data.df <- housing.data.df %>% 
+  mutate(fullAddress = paste(address, ", Zanesville OH", sep=""))
+
+# Fetch the address for each address
+housing.data.geocodes <- housing.data.df %>%
+  #filter(row_number() < 50) %>% 
+  select(fullAddress) %>% 
+  transpose() %>% 
+  map(function(row) {
+    address.geocode <- geocode(row$fullAddress)
+    Sys.sleep(0.2)
+    return(address.geocode)
+  })
+
+# Add the latitude and longitude to the dataset
+housing.data.df$latitude <-sapply(housing.data.geocodes, function(geo) geo$lat)
+housing.data.df$longitude <- sapply(housing.data.geocodes, function(geo) geo$lon)
+
+# Distance from Warehouse ####
+#
+library(geosphere)
+
+warehouse.address <- "1525 PERSHING RD, Zanesville OH"
+warehouse.geocode <- geocode(warehouse.address)  # Currently exceeded queries
+
+# Let's manually find the latitude and longitude
+warehouse.lat <- 39.925579
+warehouse.long <- -82.026608
+
+dist.from.warehouse.meters <- housing.data.df %>% 
+  select(latitude, longitude) %>% 
+  transpose() %>% 
+  map(function(row) {
+    dist <- distHaversine(c(warehouse.long, warehouse.lat), 
+                          c(row$longitude, row$latitude))
+    return(dist)
+  }) %>% 
+  unlist()
+
+housing.data.df$distanceFromWarehouseMeters <- dist.from.warehouse.meters
+
+
+# Save the prepared data ####
+#
+write_csv(housing.data.df,
+          file.path(consume.data.dir, "zanesville_oh_housing_data.csv"),
+          col_names = TRUE)
