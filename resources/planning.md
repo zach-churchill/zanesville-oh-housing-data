@@ -23,3 +23,10 @@ the project.
 * Develop R script to aggregate and validate the housing data.
 * Develop R script (or use the one above) to further prepare the data by geolocating the parcel
   number based on the address, and calculating the Great Circle distance from the warehouses.
+
+## January 22nd, 2018 - January 28th, 2018
+
+* Continue with data analysis and fixing errors in the data.
+* Perform more sophisticated techniques on data, i.e. looking at the distribution/clustering of
+  distances away from the warehouse, create features based on whether the data appear to be
+residential, or not.
