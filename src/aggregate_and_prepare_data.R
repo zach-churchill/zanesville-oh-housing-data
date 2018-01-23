@@ -67,7 +67,7 @@ housing.data.geocodes <- housing.data.df %>%
   })
 
 # Add the latitude and longitude to the dataset
-housing.data.df$latitude <-sapply(housing.data.geocodes, function(geo) geo$lat)
+housing.data.df$latitude <- sapply(housing.data.geocodes, function(geo) geo$lat)
 housing.data.df$longitude <- sapply(housing.data.geocodes, function(geo) geo$lon)
 
 # Distance from Warehouse ####
