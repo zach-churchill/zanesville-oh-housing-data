@@ -32,7 +32,7 @@ sprintf("There %d rows where the housing detail contain a NA value",
 
 # Let's see if we can fix the missing lat and long data
 library(ggmap)
-
+library(geosphere)
 found.missing.geocodes <- housing.df %>%
   filter(is.na(latitude)) %>% 
   select(fullAddress) %>% 
@@ -49,6 +49,9 @@ housing.df$longitude[is.na(housing.df$longitude)] <- sapply(found.missing.geocod
                                                           function(geo) geo$lon)  
 
 # Now, fix the missing distance data
+warehouse.lat <- 39.925579
+warehouse.long <- -82.026608
+
 dist.from.warehouse.meters <- housing.df %>% 
   filter(is.na(distanceFromWarehouseMeters)) %>% 
   select(latitude, longitude) %>% 
@@ -100,3 +103,63 @@ housing.df$appraisedValue <- scrubbed.appraised.values
 write_csv(housing.df,
           prepared.housing.data.file,
           col_names = TRUE)
+
+
+# Final Data Preparation ####
+#
+# Now let's see of the data that looks good, how the quality actually is
+good.data <- housing.df %>% 
+  filter(!is.na(numStories), appraisedValue > 0)
+
+# Now, let's derive some columns and make sure types are correct
+meters.in.miles <- 1609.344
+
+final.data <- good.data %>% 
+  mutate(appraisedValue = as.integer(appraisedValue),
+         numStories = as.integer(numStories),
+         yearBuilt = as.integer(yearBuilt),
+         numFullBaths = as.integer(numFullBaths),
+         numHalfBaths = as.integer(numHalfBaths),
+         livingArea = as.integer(livingArea),
+         basementArea = as.integer(basementArea),
+         distanceFromWarehouseMiles = distanceFromWarehouseMeters / meters.in.miles) %>% 
+  select(parcelNumber, fullAddress, longitude, latitude, distanceFromWarehouseMiles, 
+         appraisedValue, yearBuilt, numStories, livingArea, numBedrooms, numFullBaths, 
+         numHalfBaths, basement, basementArea)
+
+# Update values manually
+final.data$livingArea[final.data$parcelNumber == '81-58-03-05-000'] = 6000
+
+final.data$fullAddress[final.data$parcelNumber == '81-20-01-03-004'] = '150 MUSKINGUM AVE, Zanesville OH'
+final.data$longitude[final.data$parcelNumber == '81-20-01-03-004'] = -82.00933
+final.data$latitude[final.data$parcelNumber == '81-20-01-03-004'] = 39.93602
+final.data$distanceFromWarehouseMiles[final.data$parcelNumber == '81-20-01-03-004'] = 1.166821
+final.data$appraisedValue[final.data$parcelNumber == '81-20-01-03-004'] = 136200
+final.data$yearBuilt[final.data$parcelNumber == '81-20-01-03-004'] = 1953
+final.data$numStories[final.data$parcelNumber == '81-20-01-03-004'] = 2
+final.data$livingArea[final.data$parcelNumber == '81-20-01-03-004'] = 2018
+final.data$numBedrooms[final.data$parcelNumber == '81-20-01-03-004'] = 2
+final.data$numFullBaths[final.data$parcelNumber == '81-20-01-03-004'] = 2
+final.data$numHalfBaths[final.data$parcelNumber == '81-20-01-03-004'] = 0
+final.data$basement[final.data$parcelNumber == '81-20-01-03-004'] = 'NO'
+final.data$basementArea[final.data$parcelNumber == '81-20-01-03-004'] = 0
+
+final.data$longitude[final.data$parcelNumber == '81-37-01-02-000'] = -81.98821
+final.data$latitude[final.data$parcelNumber == '81-37-01-02-000'] = 39.92985
+final.data$distanceFromWarehouseMiles[final.data$parcelNumber == '81-37-01-02-000'] = 2.058094
+
+final.data$longitude[final.data$parcelNumber == '81-55-01-33-000'] = -81.98751
+final.data$latitude[final.data$parcelNumber == '81-55-01-33-000'] = 39.93528
+final.data$distanceFromWarehouseMiles[final.data$parcelNumber == '81-55-01-33-000'] = 2.179688
+
+final.data$longitude[final.data$parcelNumber == '81-13-03-05-000'] = -82.00896
+final.data$latitude[final.data$parcelNumber == '81-13-03-05-000'] = 39.91876
+final.data$distanceFromWarehouseMiles[final.data$parcelNumber == '81-13-03-05-000'] = 1.048302
+
+# Remove some data with odd living area 
+final.data <- filter(final.data, livingArea > 50)
+
+write_csv(final.data, 
+          file.path(consume.data.dir, 'final-housing-data.csv'), 
+          col_names = TRUE)
+
