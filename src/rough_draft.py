@@ -7,81 +7,9 @@ from collections import namedtuple
 import pandas as pd
 from selenium import webdriver
 
-URLS = {
-        'advanced-search-results': "http://www.muskingumcountyauditor.org/Results.aspx?SearchType=Advanced&Criteria=20g%2byYTTdkDKRrEbpO1sLV9b36Zp5GCYSiEbzYPtPXU%3d",
-        'parcel-id-data-fmt': "http://muskingumcountyauditor.org/Data.aspx?ParcelID={parcel_id}"
-    }
-
-HousingData = namedtuple('Row', ["parcelNumber", "address", "appraisedValue",
-                                 "numStories", "yearBuilt", "numBedrooms", 
-                                 "numFullBaths", "numHalfBaths", "livingArea",
-                                 "basement", "basementArea"])
-
-def find_project_path(project_name):
-    """Returns the full path for the project given that the project name is
-    exactly how it is in the user's files and is in the path tree from the
-    directory for which this function is called.
-
-    Example
-    --------
-    If the project name is 'Project1', and the current directory that this
-    function is '/home/zach/Documents/Project1/src/module1' then this function
-    will return '/home/zach/Documents/Project1'.
-
-    Parameters
-    ----------
-    project_name (str) : Name of the project, exactly how it is for the folder.
-
-    Returns
-    -------
-    project_path (str) : The absolute path for the project if found; otherwise,
-        error is printed to screen and program exited.
-
-    """
-    curr_dir = Path(os.getcwd())
-    path_parts = curr_dir.parts
-
-    try:
-        project_part_index = path_parts.index(project_name)
-    except ValueError as err:
-        print(err)
-        sys.exit()
-    else:
-        project_path = os.path.join(*path_parts[:project_part_index+1])
-
-    return project_path
-
-def prepare_webdriver(url):
-    """ Prepares a Selenium webdriver with Firefox for the given URL,
-    where the disclaimer button will be pressed if it appears.
-
-    Parameters
-    ----------
-    url (str) : URL that will be navigated to after creating the webdriver.
-
-    Returns
-    -------
-    driver (selenium.webdriver) : Webdriver using Firefox, and is set to the
-        given URL, where the URL is assumed to be pointing to a page on the
-        auditor's website.
-
-    """
-    # Create a link to the Firefox API file and set up a webdriver
-    driver = webdriver.Firefox()
-
-    # Navigate to the URL and pause for the website to fully load
-    driver.get(url)
-    time.sleep(1)
-
-    # If there is a disclaimer button, then click it using the CSS ID
-    button_css_id = 'ContentPlaceHolder1_btnDisclaimerAccept'
-    try:
-        driver.find_element_by_id(button_css_id).click()
-    except Exception as err:
-        print(err)
-
-    # Return the prepared webdriver object
-    return driver
+CommercialData = namedtuple('CommRow', ['parcelNumber', 'commDescription', 
+                                        'commYearBuilt', 'commYearRemodeled',
+                                        'commSectionArea', 'commNumStories'])
 
 def scrape_single_results_page(driver):
     """Scrapes the parcel numbers from a single advanced search page for the
@@ -111,101 +39,56 @@ def scrape_single_results_page(driver):
 
     return parcel_numbers
 
-def scrape_parcel_data(row, driver):
-    parcel_number = row['Parcel']
+def scrape_comm_data(row, driver):
+    parcel_number = row['parcelNumber']
     parcel_dict = {'parcel_id': parcel_number}
     parcel_url = URLS['parcel-id-data-fmt'].format(**parcel_dict)
     driver.get(parcel_url)
 
     # Define data IDs
-    id_fmt = "ContentPlaceHolder1_{}_fvData{}_{}"
-    address_id = id_fmt.format("Base", "Profile", "AddressLabel")
-    valuation_id = id_fmt.format("Valuation", "Valuation", "Label1")
-    num_stories_id = id_fmt.format("Residential", "Residential", "Label2")
-    year_built_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "YearBuiltLabel")
-    num_bed_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "NumberOfBedroomsLabel")
-    num_full_bath_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "NumberOfFullBathsLabel")
-    num_half_bath_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "NumberOfHalfBathsLabel")
-    living_area_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "FinishedLivingAreaLabel")
-    basement_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "Label1")
-    basement_area_id = id_fmt.format(
-                        "Residential",
-                        "Residential",
-                        "Label4")
+    data_table_id = 'ContentPlaceHolder1_Commercial_gvDataCommercial'
 
     # Define JavaScript code for navigating tabs
-    valuation_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','2')"
-    residential_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','8')"
+    commercial_tab = "__doPostBack('ctl00$ContentPlaceHolder1$mnuData','10')"
 
-    # Scrape data off of 'Base' tab
-    try:
-        address = driver.find_element_by_id(address_id).text
-    except Exception as err:
-        address = None
+    # Wait a couple seconds before navigating to the 'Commercial' tab
+    time.sleep(2)
 
     # Navigate to 'Valuation' tab and scrape data
-    driver.execute_script(valuation_tab)
+    driver.execute_script(commercial_tab)
     time.sleep(2)
     try:
-        valuation = driver.find_element_by_id(valuation_id).text
+        data_table = driver.find_element_by_id(data_table_id)
+        commercial_data_cols = data_table.find_elements_by_tag_name("td")
     except Exception as err:
-        valuation = None
+        print("\nNo commercial data.\n")
+    else:
+        commercial_data = []
+        for commercial_data_col in commercial_data_cols:
+           commercial_data.append(commercial_data_col.text)
 
-    # Navigate to 'Residential' tab and scrape data
-    driver.execute_script(residential_tab)
-    time.sleep(2)
-    try:
-        num_stories = driver.find_element_by_id(num_stories_id).text
-        year_built = driver.find_element_by_id(year_built_id).text
-        num_bed = driver.find_element_by_id(num_bed_id).text
-        num_full_bath = driver.find_element_by_id(num_full_bath_id).text
-        num_half_bath = driver.find_element_by_id(num_half_bath_id).text
-        living_area = driver.find_element_by_id(living_area_id).text
-        basement = driver.find_element_by_id(basement_id).text
-        basement_area = driver.find_element_by_id(basement_area_id).text
-    except Exception as err:
-        num_stories = None
-        year_built = None
-        num_bed = None
-        num_full_bath = None
-        num_half_bath = None
-        living_area = None
-        basement = None
-        basement_area = None
+    if len(commercial_data) == 5:
+        return_data = CommercialData(
+                parcelNumber      = parcel_number,
+                commDescription   = commercial_data[0],
+                commYearBuilt     = commercial_data[1],
+                commYearRemodeled = commercial_data[2],
+                commSectionArea   = commercial_data[3],
+                commNumStories    = commercial_data[4]
+            )
+    else:
+        print("\nNot all commercial data captured:", commercial_data, "\n")
 
-    row = HousingData(
-                parcelNumber   = parcel_number,
-                address        = address,
-                appraisedValue = valuation,
-                numStories     = num_stories,
-                yearBuilt      = year_built,
-                numBedrooms    = num_bed,
-                numFullBaths   = num_full_bath,
-                numHalfBaths   = num_half_bath,
-                livingArea     = living_area,
-                basement       = basement,
-                basementArea   = basement_area
+        return_data = CommercialData(
+                parcelNumber      = parcel_number,
+                commDescription   = None,
+                commYearBuilt     = None,
+                commYearRemodeled = None,
+                commSectionArea   = None,
+                commNumStories    = None
             )
 
-    return row
+    return return_data
 
 def main():
     # Set up
@@ -232,27 +115,32 @@ def main():
     empty_parcel_url = URLS['parcel-id-data-fmt'].format(**empty_parcel_dict)
     driver = prepare_webdriver(empty_parcel_url)
 
-    # Partially fill scraping function with driver
-    partial_scrape_parcel_data = functools.partial(scrape_parcel_data,
-                                                   driver=driver)
+    # Create a simple variable to control flow
+    flow_control = 'commercial'
 
-    fmt_file_path = 'housing_data_{}.csv'
-    for idx in range(2140, parcel_numbers.shape[0], 10):
-        start_time = time.time()
-        mini_batch = parcel_numbers.iloc[idx:idx+10, ]
-        parcel_data = mini_batch.apply(partial_scrape_parcel_data, axis=1)
-        end_time = time.time()
 
-        # Log index and time took to scrape     
-        print('Index: {}'.format(idx))
-        print('Took {:.2f} minutes'.format((end_time - start_time) / 60))
+    if flow_control == 'commercial':
+        potential_commercial_ids_file = os.path.join(data_path,
+                                                     'comm-parcel-numbers.csv')
+        potential_commercial_ids = pd.read_csv(potential_commercial_ids_file)
 
-        # Save the data with the index appended 
-        file_path = os.path.join(data_path, fmt_file_path.format(idx))
-        pd.DataFrame(list(parcel_data)).to_csv(file_path, header=True, index=False)
+        partial_scrape_comm_data = functools.partial(scrape_comm_data,
+                                                     driver=driver)
+
+        fmt_file_path = 'commercial_data_{}.csv'
+        for idx in range(0, potential_commercial_ids.shape[0], 10):
+            start_time = time.time()
+            mini_batch = potential_commercial_ids.iloc[idx:idx+10,]
+            commercial_data = mini_batch.apply(partial_scrape_comm_data, axis=1)
+            end_time = time.time()
+
+            # Log index and time took to scrape
+            print('Index: {}'.format(idx))
+            print('Took {.2f} minutes'.format((end_time - start_time) / 60))
+
+            # Save the data with the index appended
+            file_path = os.path.join(data_path, fmt_file_path.format(idx))
+            pd.DataFrame(list(parcel_data)).to_csv(file_path, header=True, index=False)
 
     # Close the Firefox window
     driver.quit()
-
-if __name__ == '__main__':
-    main()
