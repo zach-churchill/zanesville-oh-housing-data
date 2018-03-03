@@ -3,8 +3,5 @@
 **/*.log
 **/.Rhistory
 
-# For now, ignore all SQLite databases
-**/data/raw/*.sqlite
-
 # Ignore all sandbox files
 **/sandbox.*
