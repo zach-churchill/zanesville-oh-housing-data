@@ -1,6 +1,6 @@
 import os
 import csv
-from itertools import chain
+import itertools
 from functools import partial
 from selenium import webdriver
 from utils import find_project_path
@@ -11,9 +11,8 @@ from webscraper import scrape_residential_tab
 from webscraper import create_data_row
 
 def scrape_parcel_data(parcel_id, driver):
-    print(parcel_id)
+    print("Parcel ID: {}".format(parcel_id))
     parcel_id_data_url = get_parcel_data_url(parcel_id)
-    print(parcel_id_data_url)
     driver = redirect_url(driver, parcel_id_data_url)
 
     valuation_data = scrape_valuation_tab(driver)
@@ -21,6 +20,18 @@ def scrape_parcel_data(parcel_id, driver):
     data_row = create_data_row(parcel_id, valuation_data, residential_data)
 
     return data_row
+
+def save_mini_batch(raw_data_dir, mini_batch_idx, mini_batch):
+    mini_batch_filename = "mini_batch_{}.csv".format(mini_batch_idx)
+    mini_batch_file = os.path.join(raw_data_dir, mini_batch_filename)
+
+    column_names = mini_batch[0]._fields   # Assumes len > 0
+
+    print("Writing mini-batch {}".format(mini_batch_idx))
+    with open(mini_batch_file, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(column_names)
+        writer.writerows(mini_batch)
 
 def main():
     # Set up
@@ -35,7 +46,10 @@ def main():
     with open(parcel_ids_csv) as f:
         reader = csv.reader(f)
         colnames, *data = [row for row in reader]
-    parcel_ids = chain(*data)
+
+    # Prepare the data into a list of Parcel ID strings
+    parcel_ids_iter = itertools.chain(*data)
+    parcel_ids = list(parcel_ids_iter)
 
     # Set up a Firefox webdriver to use for scraping
     driver = webdriver.Firefox()
@@ -43,11 +57,17 @@ def main():
     # Partially fill function with driver
     prepped_scrape_parcel_data = partial(scrape_parcel_data, driver=driver)
 
-    parcel_ids = list(parcel_ids)[:5]
-
-    data_rows = map(prepped_scrape_parcel_data, parcel_ids)
-
-    print(list(data_rows))
+    # Scrape the data in mini-batches to allow for iterative saving
+    mini_batch_size = 10
+    for mini_batch_idx in range(0, len(parcel_ids), mini_batch_size):
+        mini_batch = parcel_ids[mini_batch_idx:mini_batch_idx+mini_batch_size]
+        try:
+            data_rows = map(prepped_scrape_parcel_data, mini_batch)
+        except Exception as err:
+            driver.quit()
+            raise err
+        else:
+            save_mini_batch(raw_data_dir, mini_batch_idx, list(data_rows))
 
     # Tear down
     driver.quit()
